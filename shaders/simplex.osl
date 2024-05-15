@@ -1,0 +1,32 @@
+#include "simplex.osl.h"
+
+shader FractalSimplexNoise
+    [[ string description = "Fractal Simplex noise" ]]
+(
+    float start_frequency = 1.0
+        [[ string description = "Initial sampling position multiplier that affects the overall granularity." ]],
+    vector start_offset = vector(0.0)
+        [[ string description = "Offsets the initial sampling position effectively shifting the pattern in the specified direction." ]],
+
+    float lacunarity = 2.0
+        [[ string description = "Position (frequency) multiplier per iteration." ]],
+    float gain = 0.5
+        [[ string description = "Amplitude multiplier per iteration." ]],
+    int octaves = 8
+        [[ string description = "Number of fractal iterations." ]],
+
+    float attenuation = 1.0
+        [[ string description = "The power of the falloff applied to the final result." ]],
+
+    output color result = 0.0
+) {
+    point objectPosition = transform("object", P);
+    point startPosition = start_frequency * objectPosition - start_offset;
+
+    float noiseValue = fractalSimplexNoise3D(startPosition, lacunarity, gain, octaves);
+
+    noiseValue = 0.5 * noiseValue + 0.5;
+    noiseValue = pow(noiseValue, attenuation);
+
+    result = color(noiseValue);
+}

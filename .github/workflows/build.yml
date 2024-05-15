@@ -1,0 +1,136 @@
+# From: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
+
+name: Build Mini Engine
+run-name: Building Mini-Tech ${{ github.event_name }}
+
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    env:
+      gaffer_version: 1.4.2.0
+
+    strategy:
+      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
+      fail-fast: false
+
+      # Set up a matrix to run the following 3 configurations:
+      # 1. <Windows, Release, latest MSVC compiler toolchain on the default runner image, default generator>
+      # 2. <Linux, Release, latest GCC compiler toolchain on the default runner image, default generator>
+      # 3. <Linux, Release, latest Clang compiler toolchain on the default runner image, default generator>
+      #
+      # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
+      matrix:
+        name: [linux, windows]
+        include:
+          - name: linux
+            os: ubuntu-latest
+            c_compiler: gcc
+            build_type: Release
+            cpp_compiler: g++
+            python_version: "3.10"
+            parallel_switch: -j2
+            compiler_suffix: -gcc9
+          - name: windows
+            os: windows-2019
+            build_type: Release
+            c_compiler: cl
+            cpp_compiler: cl
+            python_version: 310
+            parallel_switch: /m:2
+            compiler_suffix: ""
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: ilammy/msvc-dev-cmd@v1.12.1
+      with:
+        sdk: 10.0.17763.0
+
+    - name: Set reusable strings
+      # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
+      id: strings
+      shell: bash
+      run: |
+        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+        echo "gaffer-root-dir=${{ github.workspace }}/gaffer-${{ env.gaffer_version }}-${{ matrix.name }}" >> "$GITHUB_OUTPUT"
+        echo "install-dir=${{ github.workspace }}/build/.install/mini-engine-${{ env.gaffer_version }}" >> "$GITHUB_OUTPUT"
+    - name: Download and Unpack Bullet ${{ matrix.os }}
+      run: >
+        wget https://github.com/bulletphysics/bullet3/archive/refs/tags/3.25.tar.gz && 
+        tar -xvf 3.25.tar.gz
+      if: ${{ matrix.name == 'linux' }}
+    - name: Download Bullet ${{ matrix.os }}
+      run: >
+        curl -L --output 3.25.tar.gz --url https://github.com/bulletphysics/bullet3/archive/refs/tags/3.25.tar.gz
+      shell: pwsh
+      if: ${{ matrix.name == 'windows' }}
+    - name: Unpack Bullet ${{ matrix.os }}
+      run: >
+        tar -xvf ${{ github.workspace }}/3.25.tar.gz
+      shell: pwsh
+      if: ${{ matrix.name == 'windows' }}
+    - name: Configure Bullet ${{ matrix.os }}
+      run: cmake -DUSE_MSVC_RUNTIME_LIBRARY_DLL=ON -DINSTALL_LIBS=ON -DCMAKE_BUILD_TYPE=Release -B ${{ github.workspace }}/.bullet-build -S ${{ github.workspace }}/bullet3-3.25/ -DCMAKE_INSTALL_PREFIX:PATH=${{ steps.strings.outputs.build-output-dir }}/.install/mini-engine-${{ env.gaffer_version }}
+      if: ${{ matrix.name == 'windows' }}
+    - name: Configure Bullet ${{ matrix.os }}
+      run: cmake -DINSTALL_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=1 -B ${{ github.workspace }}/.bullet-build -S ${{ github.workspace }}/bullet3-3.25/ -DCMAKE_INSTALL_PREFIX:PATH=${{ steps.strings.outputs.build-output-dir }}/.install/mini-engine-${{ env.gaffer_version }}
+      if: ${{ matrix.name == 'linux' }}
+    - name: Make Bullet
+      run: cmake --build ${{ github.workspace }}/.bullet-build --config ${{ matrix.build_type }} -- ${{ matrix.parallel_switch }}
+    - name: Install Bullet
+      run: cmake --install ${{ github.workspace }}/.bullet-build --config ${{ matrix.build_type }}
+
+    - name: Prepare Gaffer Release ${{ matrix.os }}
+      run: >
+        wget https://github.com/GafferHQ/gaffer/releases/download/${{ env.gaffer_version }}/gaffer-${{ env.gaffer_version }}-linux-gcc9.tar.gz && 
+        tar -xvf gaffer-${{ env.gaffer_version }}-linux-gcc9.tar.gz
+      if: ${{ matrix.name == 'linux' }}
+
+    - name: Prepare Gaffer Release ${{ matrix.os }}
+      run: >
+        curl -L --output gaffer-${{ env.gaffer_version }}-windows.zip --url https://github.com/GafferHQ/gaffer/releases/download/${{ env.gaffer_version }}/gaffer-${{ env.gaffer_version }}-windows.zip
+      shell: pwsh
+      if: ${{ matrix.name == 'windows' }}
+
+    - name: Unpack ${{ matrix.os }}
+      run: >
+        tar -xvf ${{ github.workspace }}/gaffer-${{ env.gaffer_version }}-windows.zip
+      shell: pwsh
+      if: ${{ matrix.name == 'windows' }}
+
+    - name: Configure CMake
+      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+      run: >
+        cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        -DGAFFER_ROOT=${{ github.workspace }}/gaffer-${{ env.gaffer_version }}-${{ matrix.name }}${{ matrix.compiler_suffix }} -DPYTHON_VERSION='${{ matrix.python_version }}'
+        -D3RDPARTY_ROOT=${{ steps.strings.outputs.build-output-dir }}/.install/mini-engine-${{ env.gaffer_version }}
+        -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+        -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        -DCMAKE_CXX_STANDARD=17
+        -DCMAKE_CXX_STANDARD_REQUIRED=ON
+        -DCMAKE_INSTALL_PREFIX:PATH=${{ steps.strings.outputs.build-output-dir }}/.install/mini-engine-${{ env.gaffer_version }}
+        -S ${{ github.workspace }}
+
+    - name: Build
+      # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} -- ${{ matrix.parallel_switch }}
+    - name: Install
+      run: cmake --install ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+#    - name: Test
+#      run: env GAFFER_EXTENSION_PATHS=${{ steps.strings.outputs.install-dir }} GAFFER_REFERENCE_PATHS=${{ steps.strings.outputs.install-dir }}/nodes  ${{ steps.strings.outputs.gaffer-root-dir }}/bin/gaffer test MiniGafferTest MiniGafferVDBTest
+    - name: Make Archive
+      run: cd ${{ steps.strings.outputs.build-output-dir }}/.install && tar -zcvf ${{ steps.strings.outputs.build-output-dir }}/mini-engine-${{ env.gaffer_version }}.tar.gz mini-engine-${{ env.gaffer_version }}
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: mini-engine-${{ matrix.name }}-gaffer-${{ env.gaffer_version }}-release
+        path: ${{ steps.strings.outputs.build-output-dir }}/mini-engine-${{ env.gaffer_version }}.tar.gz
+
