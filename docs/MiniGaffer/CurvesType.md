@@ -1,0 +1,1 @@
+# Mini Curves Type

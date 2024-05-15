@@ -1,0 +1,39 @@
+#include "perlin_flow.osl.h"
+
+shader FractalPerlinFlowNoise
+    [[ string description = "Fractal Perlin flow noise" ]]
+(
+    float start_frequency = 1.0
+        [[ string description = "Initial sampling position multiplier that affects the overall granularity." ]],
+    vector start_offset = vector(0.0)
+        [[ string description = "Offsets the initial sampling position effectively shifting the pattern in the specified direction." ]],
+
+    float flow = 1.0
+        [[ string description = "The coordinate of a special noise dimension with a period of 1 that naturally evolves the noise to animate it instead of sliding a 3D slice throught the noise space." ]],
+
+    float lacunarity = 2.0
+        [[ string description = "Position (frequency) multiplier per iteration." ]],
+    float flow_rate = 1.0
+        [[ string description = "Flow coordinate multiplier per iteration." ]],
+    float gain = 0.5
+        [[ string description = "Amplitude multiplier per iteration." ]],
+    float advect = 0.5
+        [[ string description = "Both initial advection amount and advection multiplier per iteration." ]],
+    int octaves = 8
+        [[ string description = "Number of fractal iterations." ]],
+
+    float attenuation = 1.0
+        [[ string description = "The power of the falloff applied to the final result." ]],
+
+    output color result = 0.0
+) {
+    point objectPosition = transform("object", P);
+    point startPosition = start_frequency * objectPosition - start_offset;
+
+    float noiseValue = fractalPerlinFlowNoise3D(startPosition, flow, lacunarity, flow_rate, gain, advect, octaves);
+
+    noiseValue = 0.5 * noiseValue + 0.5;
+    noiseValue = pow(noiseValue, attenuation);
+
+    result = color(noiseValue);
+}
