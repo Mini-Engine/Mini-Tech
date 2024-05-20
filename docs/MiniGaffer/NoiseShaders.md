@@ -1,3 +1,9 @@
+---
+layout: default
+title: Noise Shaders
+parent: Mini Tech Overview
+---
+
 # Mini Noise Shaders
 
 

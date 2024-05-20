@@ -1,3 +1,8 @@
+---
+title: Windows
+parent: Mini Tech Overview
+---
+
 # Windows
 
 ## Build

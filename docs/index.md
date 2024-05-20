@@ -1,3 +1,8 @@
+---
+title: Mini Tech Overview
+has_children: true
+---
+
 ## MiniGaffer Nodes
 
 ## Curves
