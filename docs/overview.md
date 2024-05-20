@@ -8,6 +8,7 @@
     * Deform curves with noise functions
 * [**Mini Point Bind**](MiniGaffer/MiniPointBind.md)
 * [**Mini Point Deformer**](MiniGaffer/MiniPointDeformer.md)
+* [**Deform Transform**](MiniGaffer/DeformTransform.md)
 * [**Mini Resample Curves**](MiniGaffer/CurveResample.md)
 * [**Mini Measure Curves**](MiniGaffer/CurveLength.md)
 * [**Mini Curves Type**](CurvesTypes.md)

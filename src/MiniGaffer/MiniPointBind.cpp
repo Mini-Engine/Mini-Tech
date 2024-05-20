@@ -14,7 +14,6 @@
 
 #include "fmt/format.h"
 
-#include "picoflann.h"
 #include "nanoflann.h"
 
 using namespace std;
@@ -130,6 +129,21 @@ void MiniPointBind::hashProcessedObject(const ScenePath &path, const Gaffer::Con
 
 }
 
+struct DataSource
+{
+    DataSource(const std::vector<Vec3<float>>& positions ) : positions(positions) {}
+    const std::vector<Vec3<float>>& positions;
+
+    uint64_t kdtree_get_point_count() const { return positions.size(); }
+    float kdtree_get_pt(uint64_t index, int dim) const { return positions[index][dim];}
+
+    template <class BBOX>
+    bool kdtree_get_bbox(BBOX& /* bb */) const
+    {
+        return false;
+    }
+};
+
 IECore::ConstObjectPtr MiniPointBind::computeProcessedObject(const ScenePath &path, const Gaffer::Context *context, const IECore::Object *inputObject ) const
 {
     const ScenePath cageScenePath = makeScenePath(CageLocationPlug()->getValue());
@@ -147,15 +161,11 @@ IECore::ConstObjectPtr MiniPointBind::computeProcessedObject(const ScenePath &pa
     auto positionData = IECore::runTimeCast<IECore::V3fVectorData>(pPrimVarIt->second.expandedData());
     const auto& positions = positionData->readable();
 
-    // Adapter.
-    // Given an Point2f element, it returns the element of the dimension specified such that dim=0 is x and dim=1 is y
-    struct PicoFlann_V3fAdaptor{
-        inline  float operator( )(const Imath::V3f &elem, int dim) const { return elem[dim]; }
-    };
+    using KDTree = nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<float, DataSource>, DataSource, 3>;
 
-    picoflann::KdTreeIndex<3,PicoFlann_V3fAdaptor>  kdtree;
-    kdtree.build(positions);
+    DataSource pointData(positions);
 
+    KDTree tree(3, pointData);
     const auto inputPrimitive = IECore::runTimeCast<const IECoreScene::Primitive>(inputObject);
     const auto pPrimVarItInput = inputPrimitive->variables.find("P");
 
@@ -164,8 +174,6 @@ IECore::ConstObjectPtr MiniPointBind::computeProcessedObject(const ScenePath &pa
 
     float maxDistance = MaxDistancePlug()->getValue();
     int maxWeights = MaxWeightsPlug()->getValue();
-
-    std::vector<std::pair<uint32_t,double>> res;
 
     auto outputPrimitive = inputPrimitive->copy();
 
@@ -181,17 +189,24 @@ IECore::ConstObjectPtr MiniPointBind::computeProcessedObject(const ScenePath &pa
     outputPrimitive->variables[weightIndicesPrimvarName] = IECoreScene::PrimitiveVariable(IECoreScene::PrimitiveVariable::Constant, outIndexData);
     outputPrimitive->variables[weightValuesPrimvarName] = IECoreScene::PrimitiveVariable(IECoreScene::PrimitiveVariable::Constant, outWeightData);
 
+    std::vector<uint32_t> indices(maxWeights);
+    std::vector<float> distances(maxWeights);
+
     for (size_t i = 0; i < inputPositions.size(); ++i)
     {
-        kdtree.radiusSearch(res, positions, inputPositions[i],maxDistance, true, maxWeights);
+        size_t numFound = tree.rknnSearch( (float*) &inputPositions[i].x, maxWeights, indices.data(), distances.data(), maxDistance );
+
         std::vector<float> weights;
         float totalWeight = 0.0f;
+        bool zeroDistanceFound = false;
         for (size_t k = 0; k  < maxWeights; ++k)
         {
-            if (k < res.size())
+            if (k < numFound && !zeroDistanceFound)
             {
-                writableIndices.push_back(res[k].first);
-                const float weight = 1.0f / res[k].second;
+                writableIndices.push_back((int32_t)indices[k]);
+                zeroDistanceFound = distances[k] == 0.0f;
+
+                const float weight = zeroDistanceFound ? 1.0f : (1.0f / distances[k]);
                 totalWeight += weight;
                 weights.push_back(weight);
             }
@@ -201,8 +216,10 @@ IECore::ConstObjectPtr MiniPointBind::computeProcessedObject(const ScenePath &pa
                 weights.push_back(0.0);
             }
         }
-        for (size_t k = 0; k < weights.size(); ++k) {
-            writableWeights.push_back(weights[k] / totalWeight);
+
+        for (size_t k = 0; k < weights.size(); ++k)
+        {
+            writableWeights.push_back(totalWeight != 0.0f ? weights[k] / totalWeight : 0.0f);
         }
     }
 
