@@ -62,3 +62,9 @@ GafferUI.Examples.registerExample(
     description = "Subdivide Mesh"
 )
 
+GafferUI.Examples.registerExample(
+    "MiniGaffer/Point Deformer Example",
+    MTECH_ROOT / "examples/PointDeformerExample.gfr",
+    description = "Point Bind and Deform"
+)
+
