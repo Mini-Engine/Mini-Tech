@@ -1,3 +1,9 @@
+---
+layout: default
+title: Rigid Bind Curves
+parent: Mini Tech Overview
+---
+
 # Mini Rigid Bind Curves
 
 * Skin mesh in bind pose

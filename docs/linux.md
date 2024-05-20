@@ -1,3 +1,8 @@
+---
+title: Linux
+parent: Mini Tech Overview
+---
+
 # Linux
 
 ## Build

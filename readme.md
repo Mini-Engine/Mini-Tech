@@ -1,12 +1,16 @@
+---
+title: Read Me
+---
+
 # Mini-Engine Gaffer Nodes & Helper Scripts
 
 A repository of Gaffer Nodes used at Mini Engine, roughly in the following areas:
 
-* [Curves](docs/overview.md#curves)
-* [Meshes](docs/overview.md#meshes)
-* [Shaders](docs/overview.md#shading--osl-functions)
-* [Volumes](docs/overview.md#minigaffer-vdb) (experimental)
-* [Rigid Body Simulation](docs/overview.md#minigaffer-bullet) (experimental)
+* [Curves](docs/index.md#curves)
+* [Meshes](docs/index.md#meshes)
+* [Shaders](docs/index.md#shading--osl-functions)
+* [Volumes](docs/index.md#minigaffer-vdb) (experimental)
+* [Rigid Body Simulation](docs/index.md#minigaffer-bullet) (experimental)
 
 ## Getting Started
 
