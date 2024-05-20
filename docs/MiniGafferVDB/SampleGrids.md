@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Sample Grids
-parent: Mini Tech Overview
+parent: Volumes
+grand_parent: Mini Tech
 ---
+
 
 # Sample Grids

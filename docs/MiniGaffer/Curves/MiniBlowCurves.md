@@ -1,10 +1,14 @@
 ---
 layout: default
 title: Blow Curves
-parent: Mini Tech Overview
+parent: Curves
+grand_parent: Mini Tech
+nav_order: 8
 ---
 
 # Mini Blow Curves
+
+Deform curves with noise functions
 
 * Various sliding / animated noise functions to give the appearance of wind
 

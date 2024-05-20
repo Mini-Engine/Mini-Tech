@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Merge Geometry
-parent: Mini Tech Overview
+parent: Meshes
+grand_parent: Mini Tech
 ---
 
 # Mini Merge Geometry

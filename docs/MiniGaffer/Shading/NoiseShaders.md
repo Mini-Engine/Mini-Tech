@@ -1,14 +1,11 @@
 ---
-layout: default
 title: Noise Shaders
-parent: Mini Tech Overview
+parent: Shading
+grand_parent: Mini Tech
 ---
 
 # Mini Noise Shaders
 
-
 Various noise functions 
-
-
 
 [Noise Examples](examples/noise.gfr)

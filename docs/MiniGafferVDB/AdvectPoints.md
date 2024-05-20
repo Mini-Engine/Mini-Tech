@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Advect Points
-parent: Mini Tech Overview
+parent: Volumes
+grand_parent: Mini Tech
 ---
 
 # Advect Points
