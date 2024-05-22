@@ -1,32 +1,30 @@
 ---
-title: Mini Tech Overview
+title: Mini Tech
 has_children: true
 ---
 
-## MiniGaffer Nodes
+## Mini Tech
 
 ## Curves
 
-* [**Mini Rigid Bind Curves**](MiniGaffer/MiniCurvesRigidBind.md)
-    * Bind Curves in the T pose / pref pose to an animated character
-* [**Mini Blow Curves**](MiniGaffer/MiniBlowCurves.md)
-    * Deform curves with noise functions
-* [**Mini Point Bind**](MiniGaffer/MiniPointBind.md)
-* [**Mini Point Deformer**](MiniGaffer/MiniPointDeformer.md)
-* [**Deform Transform**](MiniGaffer/DeformTransform.md)
-* [**Mini Resample Curves**](MiniGaffer/CurveResample.md)
-* [**Mini Measure Curves**](MiniGaffer/CurveLength.md)
-* [**Mini Curves Type**](CurvesTypes.md)
+* [**Mini Rigid Bind Curves**](MiniGaffer/Curves/MiniCurvesRigidBind.md)
+* [**Mini Blow Curves**](MiniGaffer/Curves/MiniBlowCurves.md)
+* [**Mini Point Bind**](MiniGaffer/Curves/MiniPointBind.md)
+* [**Mini Point Deformer**](MiniGaffer/Curves/MiniPointDeformer.md)
+* [**Deform Transform**](MiniGaffer/Curves/DeformTransform.md)
+* [**Mini Resample Curves**](MiniGaffer/Curves/CurveResample.md)
+* [**Mini Measure Curves**](MiniGaffer/Curves/CurveLength.md)
+* [**Mini Curves Type**](MiniGaffer/Curves/CurvesTypes.md)
 
 ## Meshes
 
-* [**Mini Merge Geometry**](MiniGaffer/GeometryMerge.md)
-* [**Mini Subdivide Meshes**](MiniGaffer/SubdivideMesh.md)
-* [**Mini Blur Mesh Attributes**](MiniGaffer/BlurMeshAttributes.md)
+* [**Mini Merge Geometry**](MiniGaffer/Meshes/GeometryMerge.md)
+* [**Mini Subdivide Meshes**](MiniGaffer/Meshes/SubdivideMesh.md)
+* [**Mini Blur Mesh Attributes**](MiniGaffer/Meshes/BlurMeshAttributes.md)
 
 ## Shading & OSL functions
 
-* [**Mini Noise Shaders**](MiniGaffer/NoiseShaders.md)
+* [**Mini Noise Shaders**](MiniGaffer/Shading/NoiseShaders.md)
 
 ## MiniGaffer Bullet
 
@@ -37,7 +35,3 @@ has_children: true
 * [**Advect Points**](MiniGafferVDB/AdvectPoints.md)
 * [**Sample Grids**](MiniGafferVDB/SampleGrids.md)
 
-## References for Creating new nodes
-
-* [atomsGaffer](https://github.com/Toolchefs/atomsGaffer)
-* [Andrew's Extension Template](https://github.com/andrewkaufman/gafferExtensionDemo)

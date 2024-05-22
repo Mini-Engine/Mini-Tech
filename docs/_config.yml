@@ -1,0 +1,22 @@
+remote_theme: just-the-docs/just-the-docs
+
+plugins:
+  - jekyll-remote-theme # add this line to the plugins list if you already have one
+
+color_scheme: dark
+
+callouts:
+  warning:
+    title: Warning
+    color: red
+
+  note:
+    title: Note
+    color: green
+
+  highlight:
+    title: Highlight
+    color: yellow
+
+logo: "assets/mini.png"
+favicon_ico: "assets/favicon.ico"

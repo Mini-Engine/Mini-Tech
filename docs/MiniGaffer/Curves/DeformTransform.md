@@ -1,6 +1,8 @@
 ---
 title: Deform Transform
-parent: Mini Tech Overview
+parent: Curves
+grand_parent: Mini Tech
+nav_order: 4
 ---
 
 # Deform Transform

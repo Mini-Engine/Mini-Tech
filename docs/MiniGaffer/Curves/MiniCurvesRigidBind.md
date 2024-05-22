@@ -1,10 +1,14 @@
 ---
 layout: default
 title: Rigid Bind Curves
-parent: Mini Tech Overview
+parent: Curves
+grand_parent: Mini Tech
+nav_order: 5
 ---
 
 # Mini Rigid Bind Curves
+
+Bind Curves in the T pose / pref pose to an animated character
 
 * Skin mesh in bind pose
 * curves in bind pose

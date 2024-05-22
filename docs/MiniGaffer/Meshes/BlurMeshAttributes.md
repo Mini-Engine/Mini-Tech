@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Blur Mesh Attributes
-parent: Mini Tech Overview
+parent: Meshes
+grand_parent: Mini Tech
 ---
 
 # Mini Blur Mesh Attributes

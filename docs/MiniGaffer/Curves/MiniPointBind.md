@@ -1,9 +1,19 @@
 ---
 title: Point Bind
-parent: Mini Tech Overview
+parent: Curves
+grand_parent: Mini Tech
+nav_order: 6
 ---
 
 # Mini Point Bind
+
+{: .note-title }
+> Example Scene
+>
+> Help > Examples > MiniGaffer > Point Deformer Example
+>
+
+
 
 This node finds for each vertex position in the filtered geometry (render high resolution geometry) the N closest points in the cage geometry within radius R. Using the distances (D) to these closest points calculate a weight value (1/D). Store the weight and index to the position in the cage geometry in two vector constant primvars respectively.
 
@@ -21,6 +31,6 @@ An example can be found in:
 Help > Examples > MiniGaffer > Point Deformer Example
 
 {: .note }
-> Typically used in conjuction with [DeformTransform](DeformTransform.md) & [MiniPointDeform](MiniPointDeformer.md)
+> Typically used in conjuction with [Deform Transform](DeformTransform.md) & [Mini Point Deform](MiniPointDeformer.md)
 
 
