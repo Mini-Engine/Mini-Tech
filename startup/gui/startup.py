@@ -189,17 +189,17 @@ nodeMenu.append(
 
 nodeMenu.append( "/Mini/Scene/Curves/ResampleCurves", MiniGaffer.MiniResampleCurves, searchText = "ResampleCurves" )
 nodeMenu.append( "/Mini/Scene/Curves/MeasureCurves", MiniGaffer.MiniMeasureCurves, searchText = "MeasureCurves" )
-nodeMenu.append( "/Mini/Scene/MergeGeometry", MiniGaffer.MiniMergeGeometry, searchText = "MergeGeometry" )
-nodeMenu.append( "/Mini/Scene/SubdivideMesh", MiniGaffer.MiniSubdivideMesh, searchText = "SubdivideMesh" )
+nodeMenu.append( "/Mini/Scene/Mesh/MergeGeometry", MiniGaffer.MiniMergeGeometry, searchText = "MergeGeometry" )
+nodeMenu.append( "/Mini/Scene/Mesh/SubdivideMesh", MiniGaffer.MiniSubdivideMesh, searchText = "SubdivideMesh" )
 nodeMenu.append( "/Mini/Physics/Bullet", MiniGaffer.MiniBullet, searchText = "Bullet" )
 nodeMenu.append( "/Mini/Scene/Curves/GrowCurves", MiniGaffer.MiniGrowCurves, searchText = "GrowCurves")
 
-nodeMenu.append( "/Mini/Scene/CurvesTypes", MiniGaffer.MiniCurvesType, searchText = "CurvesType" )
-nodeMenu.append( "/Mini/Scene/PointDeformer", MiniGaffer.MiniPointDeformer, searchText = "PointDeformer" )
-nodeMenu.append( "/Mini/Scene/PointBind", MiniGaffer.MiniPointBind, searchText = "PointBind" )
+nodeMenu.append( "/Mini/Scene/Curves/CurvesTypes", MiniGaffer.MiniCurvesType, searchText = "CurvesType" )
+nodeMenu.append( "/Mini/Scene/Curves/PointDeformer", MiniGaffer.MiniPointDeformer, searchText = "PointDeformer" )
+nodeMenu.append( "/Mini/Scene/Curves/PointBind", MiniGaffer.MiniPointBind, searchText = "PointBind" )
 
-nodeMenu.append( "/Mini/Scene/MeshCurvature", MiniGaffer.MiniMeshCurvature, searchText = "MeshCurvature" )
-nodeMenu.append( "/Mini/Scene/BlurPrimitiveVariables", MiniGaffer.MiniBlurPrimitiveVariables, searchText = "BlurPrimitiveVariables" )
+nodeMenu.append( "/Mini/Scene/Mesh/MeshCurvature", MiniGaffer.MiniMeshCurvature, searchText = "MeshCurvature" )
+nodeMenu.append( "/Mini/Scene/Mesh/BlurPrimitiveVariables", MiniGaffer.MiniBlurPrimitiveVariables, searchText = "BlurPrimitiveVariables" )
 
 
 

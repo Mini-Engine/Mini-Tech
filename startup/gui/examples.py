@@ -77,3 +77,10 @@ GafferUI.Examples.registerExample(
     description = "Point Bind and Deform"
 )
 
+GafferUI.Examples.registerExample(
+    "MiniGaffer/Rigid Bind Example",
+    MTECH_ROOT / "examples/rigidBind.gfr",
+    description = "Rigid Bind and Deform"
+)
+
+

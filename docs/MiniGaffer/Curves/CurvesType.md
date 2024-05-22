@@ -8,6 +8,14 @@ nav_order: 3
 
 # Mini Curves Type
 
+Change Cubic Curves primitive basis.
+
+### Plugs
+
+| Name  | Type     | default value | Notes                                |
+|-------|----------|---------------|--------------------------------------|
+| Basis | int enum | linear        | linear, bezier, Bspline & CatmullRom |
+
 {: .note-title }
 > Example Scene
 >
