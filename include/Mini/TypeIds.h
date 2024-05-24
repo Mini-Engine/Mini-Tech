@@ -17,6 +17,7 @@ namespace MiniGaffer {
         MiniBulletTypeId = 115009,
         MiniPointDeformTypeId = 115010,
         MiniPointBindTypeId = 115011,
+        MiniGrowCurvesTypeId = 115012,
         LastTypeId = 115099,
     };
 
