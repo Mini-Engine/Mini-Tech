@@ -57,6 +57,15 @@ GafferUI.Examples.registerExample(
 )
 
 GafferUI.Examples.registerExample(
+    "MiniGaffer/Curve Grow Example",
+    MTECH_ROOT / "examples/grow.gfr",
+    description = "Grow Curves",
+    notableNodes = [
+        MiniGaffer.MiniGrowCurves
+    ]
+)
+
+GafferUI.Examples.registerExample(
     "MiniGaffer/Subdivide Mesh Example",
     MTECH_ROOT / "examples/subdivide.gfr",
     description = "Subdivide Mesh"

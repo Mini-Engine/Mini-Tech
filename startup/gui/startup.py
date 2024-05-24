@@ -192,6 +192,7 @@ nodeMenu.append( "/Mini/Scene/Curves/MeasureCurves", MiniGaffer.MiniMeasureCurve
 nodeMenu.append( "/Mini/Scene/MergeGeometry", MiniGaffer.MiniMergeGeometry, searchText = "MergeGeometry" )
 nodeMenu.append( "/Mini/Scene/SubdivideMesh", MiniGaffer.MiniSubdivideMesh, searchText = "SubdivideMesh" )
 nodeMenu.append( "/Mini/Physics/Bullet", MiniGaffer.MiniBullet, searchText = "Bullet" )
+nodeMenu.append( "/Mini/Scene/Curves/GrowCurves", MiniGaffer.MiniGrowCurves, searchText = "GrowCurves")
 
 nodeMenu.append( "/Mini/Scene/CurvesTypes", MiniGaffer.MiniCurvesType, searchText = "CurvesType" )
 nodeMenu.append( "/Mini/Scene/PointDeformer", MiniGaffer.MiniPointDeformer, searchText = "PointDeformer" )
