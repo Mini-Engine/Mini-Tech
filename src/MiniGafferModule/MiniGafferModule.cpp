@@ -17,6 +17,7 @@
 #include "Mini/MiniBullet.h"
 #include "Mini/MiniPointDeformer.h"
 #include "Mini/MiniPointBind.h"
+#include "Mini/MiniGrowCurves.h"
 
 using namespace boost::python;
 
@@ -45,6 +46,10 @@ BOOST_PYTHON_MODULE( _MiniGaffer )
 
 	typedef GafferBindings::DependencyNodeWrapper<MiniGaffer::MiniPointBind> MiniGafferPointBindWrapper;
 	GafferBindings::DependencyNodeClass<MiniGaffer::MiniPointBind, MiniGafferPointBindWrapper>();
+
+    typedef GafferBindings::DependencyNodeWrapper<MiniGaffer::MiniGrowCurves> MiniGafferGrowCurvesWrapper;
+    GafferBindings::DependencyNodeClass<MiniGaffer::MiniGrowCurves, MiniGafferGrowCurvesWrapper>();
+
 
     GafferBindings::DependencyNodeClass<MiniGaffer::MiniMeshCurvature>();
 	{
