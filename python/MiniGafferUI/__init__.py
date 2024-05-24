@@ -15,3 +15,4 @@ from . import MiniBulletUI
 from . import MiniCurvesTypeUI
 from . import MiniPointDeformerUI
 from . import MiniPointBindUI
+from . import MiniGrowCurvesUI
