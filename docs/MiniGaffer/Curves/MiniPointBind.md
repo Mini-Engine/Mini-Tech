@@ -2,7 +2,7 @@
 title: Point Bind
 parent: Curves
 grand_parent: Mini Tech
-nav_order: 6
+nav_order: 5
 ---
 
 # Mini Point Bind
@@ -31,6 +31,6 @@ An example can be found in:
 Help > Examples > MiniGaffer > Point Deformer Example
 
 {: .note }
-> Typically used in conjuction with [Deform Transform](DeformTransform.md) & [Mini Point Deform](MiniPointDeformer.md)
+> Typically used in conjunction with [Deform Transform](DeformTransform.md) & [Mini Point Deform](MiniPointDeformer.md)
 
 

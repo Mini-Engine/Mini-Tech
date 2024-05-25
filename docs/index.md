@@ -14,7 +14,7 @@ has_children: true
 * [**Deform Transform**](MiniGaffer/Curves/DeformTransform.md)
 * [**Mini Resample Curves**](MiniGaffer/Curves/CurveResample.md)
 * [**Mini Measure Curves**](MiniGaffer/Curves/CurveLength.md)
-* [**Mini Curves Type**](MiniGaffer/Curves/CurvesTypes.md)
+* [**Mini Curves Type**](MiniGaffer/Curves/CurvesType.md)
 
 ## Meshes
 

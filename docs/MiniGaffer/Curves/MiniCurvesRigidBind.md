@@ -3,10 +3,17 @@ layout: default
 title: Rigid Bind Curves
 parent: Curves
 grand_parent: Mini Tech
-nav_order: 5
+nav_order: 7
 ---
 
 # Mini Rigid Bind Curves
+
+{: .note-title }
+> Rigid Bind and Deform Example Scene
+>
+> Help > Examples > MiniGaffer > Rigid Bind Example
+>
+
 
 Bind Curves in the T pose / pref pose to an animated character
 

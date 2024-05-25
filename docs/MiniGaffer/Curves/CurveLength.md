@@ -7,6 +7,14 @@ nav_order: 1
 
 # Mini Measure Curves
 
+Measure the length of each curve in the filtered Curves Primitives and write it as a uniform PrimVar.
+
+### Plugs
+
+| Name           | Type     | default value   | Notes |
+|----------------|----------|-----------------|-------|
+| Length Primvar | string   | length          |       |
+
 
 {: .note-title }
 > Example Scene
