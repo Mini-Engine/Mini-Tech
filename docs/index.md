@@ -5,22 +5,27 @@ has_children: true
 
 ## Mini Tech
 
+![MiniBanner](assets/mini-background-wide-edge.png)
+
 ## Curves
 
-* [**Mini Rigid Bind Curves**](MiniGaffer/Curves/MiniCurvesRigidBind.md)
-* [**Mini Blow Curves**](MiniGaffer/Curves/MiniBlowCurves.md)
+* [**Mini Measure Curves**](MiniGaffer/Curves/CurveLength.md)
+* [**Mini Resample Curves**](MiniGaffer/Curves/CurveResample.md)
+* [**Mini Curves Type**](MiniGaffer/Curves/CurvesType.md)
+* [**Deform Transform**](MiniGaffer/Curves/DeformTransform.md)
+* [**Grow Curves**](MiniGaffer/Curves/GrowCurves.md)
 * [**Mini Point Bind**](MiniGaffer/Curves/MiniPointBind.md)
 * [**Mini Point Deformer**](MiniGaffer/Curves/MiniPointDeformer.md)
-* [**Deform Transform**](MiniGaffer/Curves/DeformTransform.md)
-* [**Mini Resample Curves**](MiniGaffer/Curves/CurveResample.md)
-* [**Mini Measure Curves**](MiniGaffer/Curves/CurveLength.md)
-* [**Mini Curves Type**](MiniGaffer/Curves/CurvesType.md)
+* [**Mini Rigid Bind Curves**](MiniGaffer/Curves/MiniCurvesRigidBind.md)
+* [**Mini Blow Curves**](MiniGaffer/Curves/MiniBlowCurves.md)
+
 
 ## Meshes
 
+* [**Mesh Blur Attributes**](MiniGaffer/Meshes/BlurMeshAttributes.md)
 * [**Mini Merge Geometry**](MiniGaffer/Meshes/GeometryMerge.md)
+* [**Mesh Curvature**](MiniGaffer/Meshes/MeshCurvature.md)
 * [**Mini Subdivide Meshes**](MiniGaffer/Meshes/SubdivideMesh.md)
-* [**Mini Blur Mesh Attributes**](MiniGaffer/Meshes/BlurMeshAttributes.md)
 
 ## Shading & OSL functions
 

@@ -3,7 +3,7 @@ layout: default
 title: Blow Curves
 parent: Curves
 grand_parent: Mini Tech
-nav_order: 8
+nav_order: 80
 ---
 
 # Mini Blow Curves

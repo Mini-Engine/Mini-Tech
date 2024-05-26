@@ -2,7 +2,7 @@
 title: Build
 has_children: true
 parent: Mini Tech
-nav_order: 6
+nav_order: 60
 ---
 
 

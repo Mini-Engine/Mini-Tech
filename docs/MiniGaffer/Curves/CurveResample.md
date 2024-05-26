@@ -2,7 +2,7 @@
 title: Resample Curves
 parent: Curves
 grand_parent: Mini Tech
-nav_order: 2
+nav_order: 20
 ---
 
 # Mini Resample Curves

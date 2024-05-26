@@ -2,7 +2,7 @@
 title: Measure Curves
 parent: Curves
 grand_parent: Mini Tech
-nav_order: 1
+nav_order: 10
 ---
 
 # Mini Measure Curves
