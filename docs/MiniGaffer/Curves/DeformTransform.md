@@ -2,14 +2,14 @@
 title: Deform Transform
 parent: Curves
 grand_parent: Mini Tech
-nav_order: 4
+nav_order: 40
 ---
 
 # Deform Transform
 
 Create the required PrimVars to bind Curves Primitive to a Mesh Primitive.
 
-### Required Intput PrimVars
+### Required Input PrimVars
 
 | Name | Type | Interpolation | Notes               |
 |------|------|---------------|---------------------|
@@ -18,11 +18,6 @@ Create the required PrimVars to bind Curves Primitive to a Mesh Primitive.
 | uv   | V2d  | Face Varying  | texture coordinates |
 
 
-## Output PrimVars
-
-| Name          | Type | Interpolation | Notes                                           |
-|---------------|------|---------------|-------------------------------------------------|
-| BindTransform | M44f | Vertex        | Affine transform from *Rest* to *Animated* pose |
 
 
 {: .note }

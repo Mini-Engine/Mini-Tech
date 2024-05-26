@@ -2,7 +2,7 @@
 title: Point Bind
 parent: Curves
 grand_parent: Mini Tech
-nav_order: 5
+nav_order: 50
 ---
 
 # Mini Point Bind

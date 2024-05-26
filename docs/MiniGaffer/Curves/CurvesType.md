@@ -3,7 +3,7 @@ layout: default
 title: Curves Type
 parent: Curves
 grand_parent: Mini Tech
-nav_order: 3
+nav_order: 30
 ---
 
 # Mini Curves Type
