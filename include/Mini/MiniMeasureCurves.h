@@ -20,6 +20,9 @@ namespace MiniGaffer
         Gaffer::StringPlug *lengthNamePlug();
         const Gaffer::StringPlug *lengthNamePlug() const;
 
+        Gaffer::BoolPlug *normalizePlug();
+        const Gaffer::BoolPlug *normalizePlug() const;
+
         IE_CORE_DECLARERUNTIMETYPEDEXTENSION( MiniGaffer::MiniMeasureCurves, TypeId::MiniMeasureCurvesTypeId, GafferScene::FilteredSceneProcessor );
 
     protected:

@@ -14,6 +14,7 @@ namespace MiniGaffer
     {
         storeIndexOfNextChild(g_firstPlugIndex);
         addChild(new Gaffer::StringPlug ("lengthPrimvar", Gaffer::Plug::In, "length"));
+        addChild(new Gaffer::BoolPlug ("normalize", Gaffer::Plug::In, false) );
     }
 
     Gaffer::StringPlug *MiniMeasureCurves::lengthNamePlug()
@@ -26,9 +27,20 @@ namespace MiniGaffer
         return getChild<Gaffer::StringPlug>( g_firstPlugIndex + 0 );
     }
 
+    Gaffer::BoolPlug *MiniMeasureCurves::normalizePlug()
+    {
+        return getChild<Gaffer::BoolPlug>( g_firstPlugIndex + 1 );
+    }
+
+    const Gaffer::BoolPlug *MiniMeasureCurves::normalizePlug() const
+    {
+
+        return getChild<Gaffer::BoolPlug>( g_firstPlugIndex + 1 );
+    }
+
     bool MiniMeasureCurves::affectsProcessedObject( const Gaffer::Plug *input ) const
     {
-        if (input == inPlug()->objectPlug() || input == lengthNamePlug())
+        if (input == inPlug()->objectPlug() || input == lengthNamePlug() || input == normalizePlug())
         {
             return true;
         }
@@ -39,6 +51,7 @@ namespace MiniGaffer
     {
         ObjectProcessor::hashProcessedObject(path, context, h);
         lengthNamePlug()->hash(h);
+        normalizePlug()->hash(h);
     }
 
     IECore::ConstObjectPtr MiniMeasureCurves::computeProcessedObject( const ScenePath &path, const Gaffer::Context *context, const IECore::Object *inputObject ) const
@@ -63,15 +76,18 @@ namespace MiniGaffer
         const auto& vertsPerCurve = newCurves->verticesPerCurve()->readable();
 
         size_t i = 0;
+        const bool normalize = normalizePlug()->getValue();
         for (size_t c = 0; c < newCurves->numCurves(); ++c)
         {
             float previous = 0.0f;
             float lengthAcc = 0.0f;
+            const float totalLength = evaluator.curveLength(c);
             for (size_t v = 0; v < vertsPerCurve[c]; ++v)
             {
                 const float param = v / static_cast<float>(vertsPerCurve[c] - 1);
                 lengthAcc += evaluator.curveLength(c, previous, param);
-                lengths[i++] = lengthAcc;
+
+                lengths[i++] = lengthAcc / (normalize ? totalLength : 1.0f);
                 previous = param;
             }
 
