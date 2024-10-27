@@ -48,6 +48,7 @@ MiniPointBind::MiniPointBind(const std::string &name )
     addChild( new IntPlug( "maxWeights", Plug::In, 4 ) );
     addChild( new StringPlug( "WeightsPrimVar", Plug::In, "PointBindWeights" ) );
     addChild( new StringPlug( "IndicesPrimVar", Plug::In, "PointBindIndices" ) );
+    addChild( new StringPlug( "MaskPrimVar", Plug::In, "CageVertexMask") );
 }
 
 Gaffer::StringPlug *MiniPointBind::CageLocationPlug()
@@ -101,6 +102,17 @@ const Gaffer::StringPlug *MiniPointBind::IndicesPrimVarPlug() const
 }
 
 
+Gaffer::StringPlug *MiniPointBind::MaskPrimVarPlug()
+{
+    return getChild<StringPlug>( g_firstPlugIndex + 5 );
+}
+
+const Gaffer::StringPlug *MiniPointBind::MaskPrimVarPlug() const
+{
+    return getChild<StringPlug>( g_firstPlugIndex + 5 );
+}
+
+
 bool MiniPointBind::affectsProcessedObject(const Gaffer::Plug *input ) const
 {
     if (
@@ -108,7 +120,8 @@ bool MiniPointBind::affectsProcessedObject(const Gaffer::Plug *input ) const
         input == MaxWeightsPlug() ||
         input == CageLocationPlug() ||
         input == IndicesPrimVarPlug() ||
-        input == WeightsPrimVarPlug() )
+        input == WeightsPrimVarPlug() ||
+        input == MaskPrimVarPlug())
     {
         return true;
     }
@@ -121,6 +134,7 @@ void MiniPointBind::hashProcessedObject(const ScenePath &path, const Gaffer::Con
     MaxWeightsPlug()->hash(h);
     IndicesPrimVarPlug()->hash(h);
     WeightsPrimVarPlug()->hash(h);
+    MaskPrimVarPlug()->hash(h);
 
     const ScenePath cageScenePath = makeScenePath(CageLocationPlug()->getValue());
     h.append(inPlug()->objectHash(cageScenePath));
@@ -161,6 +175,16 @@ IECore::ConstObjectPtr MiniPointBind::computeProcessedObject(const ScenePath &pa
     auto positionData = IECore::runTimeCast<IECore::V3fVectorData>(pPrimVarIt->second.expandedData());
     const auto& positions = positionData->readable();
 
+
+    const auto maskPrimVarIt = cagePrimitive->variables.find(MaskPrimVarPlug()->getValue());
+    const int* maskData = nullptr;
+
+    if (maskPrimVarIt != cagePrimitive->variables.end())
+    {
+        auto maskVectorData = IECore::runTimeCast<IECore::IntVectorData>(maskPrimVarIt->second.expandedData());
+        maskData = maskVectorData->readable().data();
+    }
+
     using KDTree = nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<float, DataSource>, DataSource, 3>;
 
     DataSource pointData(positions);
@@ -192,21 +216,34 @@ IECore::ConstObjectPtr MiniPointBind::computeProcessedObject(const ScenePath &pa
     std::vector<uint32_t> indices(maxWeights);
     std::vector<float> distances(maxWeights);
 
+    auto checkMask = [maskData](size_t i) {
+        if (maskData)
+            return maskData[i] != 0;
+
+        return false;
+    };
+
     for (size_t i = 0; i < inputPositions.size(); ++i)
     {
-        size_t numFound = tree.rknnSearch( (float*) &inputPositions[i].x, maxWeights, indices.data(), distances.data(), maxDistance );
+
+        size_t numFound = tree.rknnSearch( (float*) &inputPositions[i].x, maxWeights , indices.data(), distances.data(), maxDistance );
 
         std::vector<float> weights;
         float totalWeight = 0.0f;
         bool zeroDistanceFound = false;
         for (size_t k = 0; k  < maxWeights; ++k)
         {
-            if (k < numFound && !zeroDistanceFound)
+            if (k < numFound && !zeroDistanceFound )
             {
                 writableIndices.push_back((int32_t)indices[k]);
                 zeroDistanceFound = distances[k] == 0.0f;
 
-                const float weight = zeroDistanceFound ? 1.0f : (1.0f / distances[k]);
+                float weight = zeroDistanceFound ? 1.0f : (1.0f / distances[k]);
+                if (checkMask(indices[k]))
+                {
+                    weight = 0.0f;
+                }
+
                 totalWeight += weight;
                 weights.push_back(weight);
             }
