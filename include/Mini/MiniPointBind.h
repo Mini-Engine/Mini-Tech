@@ -39,6 +39,8 @@ namespace MiniGaffer
             Gaffer::StringPlug *IndicesPrimVarPlug();
             const Gaffer::StringPlug *IndicesPrimVarPlug() const;
 
+            Gaffer::StringPlug *MaskPrimVarPlug();
+            const Gaffer::StringPlug *MaskPrimVarPlug() const;
 
             IE_CORE_DECLARERUNTIMETYPEDEXTENSION(MiniGaffer::MiniPointBind, MiniGaffer::TypeId::MiniPointBindTypeId, ObjectProcessor );
 
