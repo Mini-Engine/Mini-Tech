@@ -198,6 +198,7 @@ nodeMenu.append( "/Mini/Scene/Curves/CurvesTypes", MiniGaffer.MiniCurvesType, se
 nodeMenu.append( "/Mini/Scene/Curves/PointDeformer", MiniGaffer.MiniPointDeformer, searchText = "PointDeformer" )
 nodeMenu.append( "/Mini/Scene/Curves/PointBind", MiniGaffer.MiniPointBind, searchText = "PointBind" )
 nodeMenu.append( "/Mini/Scene/Mesh/BlendDeformer", MiniGaffer.MiniBlendDeformer, searchText = "BlendDeformer" )
+nodeMenu.append( "/Mini/Scene/Mesh/BendDeformer", MiniGaffer.MiniBendDeformer, searchText = "BendDeformer" )
 
 nodeMenu.append( "/Mini/Scene/Mesh/MeshCurvature", MiniGaffer.MiniMeshCurvature, searchText = "MeshCurvature" )
 nodeMenu.append( "/Mini/Scene/Mesh/BlurPrimitiveVariables", MiniGaffer.MiniBlurPrimitiveVariables, searchText = "BlurPrimitiveVariables" )
