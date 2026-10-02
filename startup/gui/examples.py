@@ -78,6 +78,15 @@ GafferUI.Examples.registerExample(
 )
 
 GafferUI.Examples.registerExample(
+    "MiniGaffer/Blend Deformer Example",
+    MTECH_ROOT / "examples/BlendDeformerExample.gfr",
+    description = "Blend a sphere between a stretched and a flattened target, like Maya's blendShape",
+    notableNodes = [
+        MiniGaffer.MiniBlendDeformer
+    ]
+)
+
+GafferUI.Examples.registerExample(
     "MiniGaffer/Rigid Bind Example",
     MTECH_ROOT / "examples/rigidBind.gfr",
     description = "Rigid Bind and Deform"
