@@ -23,9 +23,15 @@ has_children: true
 ## Meshes
 
 * [**Mesh Blur Attributes**](MiniGaffer/Meshes/BlurMeshAttributes.md)
+* [**Mini Bend Deformer**](MiniGaffer/Meshes/BendDeformer.md)
+* [**Mini Blend Deformer**](MiniGaffer/Meshes/BlendDeformer.md)
 * [**Mini Merge Geometry**](MiniGaffer/Meshes/GeometryMerge.md)
 * [**Mesh Curvature**](MiniGaffer/Meshes/MeshCurvature.md)
 * [**Mini Subdivide Meshes**](MiniGaffer/Meshes/SubdivideMesh.md)
+
+## Effects
+
+* [**Mini Dust Hit**](MiniGaffer/Effects/DustHit.md)
 
 ## Shading & OSL functions
 

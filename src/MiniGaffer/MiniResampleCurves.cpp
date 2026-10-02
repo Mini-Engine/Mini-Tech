@@ -296,7 +296,7 @@ namespace MiniGaffer
 
     Gaffer::ValuePlug::CachePolicy MiniResampleCurves::processedObjectComputeCachePolicy() const
     {
-        return Gaffer::ValuePlug::CachePolicy::Standard;
+        return Gaffer::ValuePlug::CachePolicy::Default;
     }
 
 

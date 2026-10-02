@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     env:
-      gaffer_version: 1.4.2.0
+      gaffer_version: 1.7.3.1
 
     strategy:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
@@ -33,15 +33,15 @@ jobs:
             c_compiler: gcc
             build_type: Release
             cpp_compiler: g++
-            python_version: "3.10"
+            python_version: "3.11"
             parallel_switch: -j2
-            compiler_suffix: -gcc9
+            compiler_suffix: ""
           - name: windows
-            os: windows-2019
+            os: windows-2022
             build_type: Release
             c_compiler: cl
             cpp_compiler: cl
-            python_version: 310
+            python_version: 311
             parallel_switch: /m:2
             compiler_suffix: ""
 
@@ -88,8 +88,8 @@ jobs:
 
     - name: Prepare Gaffer Release ${{ matrix.os }}
       run: >
-        wget https://github.com/GafferHQ/gaffer/releases/download/${{ env.gaffer_version }}/gaffer-${{ env.gaffer_version }}-linux-gcc9.tar.gz && 
-        tar -xvf gaffer-${{ env.gaffer_version }}-linux-gcc9.tar.gz
+        wget https://github.com/GafferHQ/gaffer/releases/download/${{ env.gaffer_version }}/gaffer-${{ env.gaffer_version }}-linux.tar.gz && 
+        tar -xvf gaffer-${{ env.gaffer_version }}-linux.tar.gz
       if: ${{ matrix.name == 'linux' }}
 
     - name: Prepare Gaffer Release ${{ matrix.os }}
@@ -129,7 +129,7 @@ jobs:
     - name: Make Archive
       run: cd ${{ steps.strings.outputs.build-output-dir }}/.install && tar -zcvf ${{ steps.strings.outputs.build-output-dir }}/mini-engine-${{ env.gaffer_version }}.tar.gz mini-engine-${{ env.gaffer_version }}
     - name: Upload
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: mini-engine-${{ matrix.name }}-gaffer-${{ env.gaffer_version }}-release
         path: ${{ steps.strings.outputs.build-output-dir }}/mini-engine-${{ env.gaffer_version }}.tar.gz

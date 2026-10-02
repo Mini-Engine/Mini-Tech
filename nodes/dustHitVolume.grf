@@ -1,0 +1,50 @@
+import Gaffer
+import GafferScene
+import IECore
+import MiniGafferVDB
+
+Gaffer.Metadata.registerValue( parent, "serialiser:milestoneVersion", 1, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:majorVersion", 8, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:minorVersion", 0, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:patchVersion", 0, persistent=False )
+
+__children = {}
+
+__children["vdb"] = MiniGafferVDB.VDBObject( "vdb" )
+parent.addChild( __children["vdb"] )
+__children["filter"] = GafferScene.PathFilter( "filter" )
+parent.addChild( __children["filter"] )
+__children["toLevelSet"] = MiniGafferVDB.PointsToLevelSet( "toLevelSet" )
+parent.addChild( __children["toLevelSet"] )
+__children["toFog"] = MiniGafferVDB.LevelSetToFog( "toFog" )
+parent.addChild( __children["toFog"] )
+__children["points"] = GafferScene.ScenePlug( "points", flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, )
+parent.addChild( __children["points"] )
+__children["pointsLocation"] = Gaffer.StringPlug( "pointsLocation", defaultValue = '/dust', flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, )
+parent.addChild( __children["pointsLocation"] )
+__children["radiusScale"] = Gaffer.FloatPlug( "radiusScale", defaultValue = 0.5, minValue = 0.0, flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, )
+parent.addChild( __children["radiusScale"] )
+__children["voxelSize"] = Gaffer.FloatPlug( "voxelSize", defaultValue = 0.05000000074505806, minValue = 0.0, flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, )
+parent.addChild( __children["voxelSize"] )
+__children["out"] = GafferScene.ScenePlug( "out", direction = Gaffer.Plug.Direction.Out, flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, )
+parent.addChild( __children["out"] )
+__children["vdb"]["name"].setValue( 'dustVolume' )
+__children["vdb"]["gridType"].setValue( 1 )
+__children["vdb"]["gridName"].setValue( 'density' )
+__children["vdb"]["voxelSize"].setInput( __children["voxelSize"] )
+__children["filter"]["paths"].setValue( IECore.StringVectorData( [ '/dustVolume' ] ) )
+__children["toLevelSet"]["in"].setInput( __children["vdb"]["out"] )
+__children["toLevelSet"]["filter"].setInput( __children["filter"]["out"] )
+__children["toLevelSet"]["in1"].setInput( __children["points"] )
+__children["toLevelSet"]["pointsLocation"].setInput( __children["pointsLocation"] )
+__children["toLevelSet"]["grid"].setValue( 'density' )
+__children["toLevelSet"]["radiusScale"].setInput( __children["radiusScale"] )
+__children["toLevelSet"]["velocityAttribute"].setValue( 'v' )
+__children["toFog"]["in"].setInput( __children["toLevelSet"]["out"] )
+__children["toFog"]["filter"].setInput( __children["filter"]["out"] )
+__children["toFog"]["grids"].setValue( 'density' )
+__children["out"].setInput( __children["toFog"]["out"] )
+Gaffer.Metadata.registerValue( parent, 'description', 'Turns the dust made by MiniDustHit into a VDB fog volume called `density`.' )
+
+
+del __children

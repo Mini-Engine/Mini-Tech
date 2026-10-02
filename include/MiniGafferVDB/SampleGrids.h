@@ -1,5 +1,6 @@
 #pragma once
 
+#include "MiniGafferVDB/Export.h"
 #include "MiniGafferVDB/TypeIds.h"
 
 #include "GafferScene/SceneElementProcessor.h"
@@ -12,7 +13,7 @@
 namespace MiniGafferVDB
 {
 
-class SampleGrids : public GafferScene::SceneElementProcessor
+class MINIGAFFERVDB_API SampleGrids : public GafferScene::SceneElementProcessor
 {
 	public :
 

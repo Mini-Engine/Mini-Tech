@@ -1,0 +1,64 @@
+import Gaffer
+import GafferScene
+import IECore
+import MiniGaffer
+import imath
+
+Gaffer.Metadata.registerValue( parent, "serialiser:milestoneVersion", 1, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:majorVersion", 8, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:minorVersion", 0, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:patchVersion", 0, persistent=False )
+
+__children = {}
+
+__children["floor"] = GafferScene.Plane( "floor" )
+parent.addChild( __children["floor"] )
+__children["ball"] = GafferScene.Sphere( "ball" )
+parent.addChild( __children["ball"] )
+__children["bounce"] = Gaffer.Expression( "bounce" )
+parent.addChild( __children["bounce"] )
+__children["bounce"]["__out"].addChild( Gaffer.FloatPlug( "p0", direction = Gaffer.Plug.Direction.Out, defaultValue = 0.0, flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["bounce"]["__out"].addChild( Gaffer.FloatPlug( "p1", direction = Gaffer.Plug.Direction.Out, defaultValue = 0.0, flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["group"] = GafferScene.Group( "group" )
+parent.addChild( __children["group"] )
+__children["group"]["in"].resize( 3 )
+__children["rootFilter"] = GafferScene.PathFilter( "rootFilter" )
+parent.addChild( __children["rootFilter"] )
+__children["dust"] = MiniGaffer.MiniDustHit( "dust" )
+parent.addChild( __children["dust"] )
+__children["volume"] = Gaffer.Reference( "volume" )
+parent.addChild( __children["volume"] )
+__children["volume"].load( "dustHitVolume.grf" )
+__children["merge"] = GafferScene.Parent( "merge" )
+parent.addChild( __children["merge"] )
+__children["merge"]["children"].resize( 2 )
+parent["frameRange"]["end"].setValue( 72 )
+__children["floor"]["name"].setValue( 'floor' )
+__children["floor"]["transform"]["rotate"].setValue( imath.V3f( -90, 0, 0 ) )
+__children["floor"]["dimensions"].setValue( imath.V2f( 12, 12 ) )
+__children["ball"]["name"].setValue( 'ball' )
+__children["ball"]["transform"]["translate"]["x"].setInput( __children["bounce"]["__out"]["p0"] )
+__children["ball"]["transform"]["translate"]["y"].setInput( __children["bounce"]["__out"]["p1"] )
+__children["ball"]["radius"].setValue( 0.5 )
+__children["group"]["in"][0].setInput( __children["floor"]["out"] )
+__children["group"]["in"][1].setInput( __children["ball"]["out"] )
+__children["rootFilter"]["paths"].setValue( IECore.StringVectorData( [ '/' ] ) )
+Gaffer.Metadata.registerValue( __children["dust"], 'annotation:user:text', 'Dust is made where the ball lands on the floor.' )
+__children["dust"]["in"].setInput( __children["group"]["out"] )
+__children["dust"]["filter"].setInput( __children["rootFilter"]["out"] )
+__children["dust"]["colliders"].setValue( '/group/floor /group/ball' )
+__children["dust"]["contactDistance"].setValue( 0.029999999329447746 )
+__children["dust"]["minSpeed"].setValue( 1.0 )
+__children["dust"]["countPerHit"].setValue( 400 )
+__children["dust"]["lifetime"].setValue( 30 )
+Gaffer.Metadata.registerValue( __children["volume"], 'description', 'Turns the dust made by MiniDustHit into a VDB fog volume called `density`.' )
+__children["volume"]["points"].setInput( __children["dust"]["out"] )
+__children["volume"]["radiusScale"].setValue( 1.0 )
+__children["merge"]["in"].setInput( __children["dust"]["out"] )
+__children["merge"]["parent"].setValue( '/' )
+__children["merge"]["children"][0].setInput( __children["volume"]["out"] )
+__children["bounce"]["__engine"].setValue( 'python' )
+__children["bounce"]["__expression"].setValue( 'phase = ( ( context.getFrame() - 1 ) % 24 ) / 12.0 - 1.0\nparent["__out"]["p1"] = 0.5 + 3.0 * ( 1.0 - phase * phase )\nparent["__out"]["p0"] = -2.0 + context.getFrame() * 0.05' )
+
+
+del __children
