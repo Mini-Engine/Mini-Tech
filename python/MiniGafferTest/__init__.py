@@ -8,6 +8,7 @@ from .MiniBulletTest import MiniBulletTest
 from .MiniCurvesTypeTest import MiniCurvesTypeTest
 from .MiniPointBindTest import MiniPointBindTest
 from .MiniPointDeformerTest import MiniPointDeformerTest
+from .MiniBlendDeformerTest import MiniBlendDeformerTest
 
 if __name__ == "__main__":
     import unittest

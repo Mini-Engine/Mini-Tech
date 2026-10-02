@@ -23,6 +23,7 @@ has_children: true
 ## Meshes
 
 * [**Mesh Blur Attributes**](MiniGaffer/Meshes/BlurMeshAttributes.md)
+* [**Mini Blend Deformer**](MiniGaffer/Meshes/BlendDeformer.md)
 * [**Mini Merge Geometry**](MiniGaffer/Meshes/GeometryMerge.md)
 * [**Mesh Curvature**](MiniGaffer/Meshes/MeshCurvature.md)
 * [**Mini Subdivide Meshes**](MiniGaffer/Meshes/SubdivideMesh.md)
