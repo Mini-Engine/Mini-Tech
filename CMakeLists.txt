@@ -27,7 +27,7 @@ set(DEPENDENCY_INCLUDE_PATHS
         ${OPENEXR_ROOT}/include/OpenEXR
         ${CORTEX_ROOT}/include
         ${GAFFER_ROOT}/include
-        ${GAFFER_ROOT}/include/python3.10
+        ${GAFFER_ROOT}/include/python${PYTHON_VERSION}
         ${GAFFER_ROOT}/include/Imath
 )
 
