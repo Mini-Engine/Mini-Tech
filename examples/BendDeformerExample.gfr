@@ -1,0 +1,67 @@
+import Gaffer
+import GafferScene
+import IECore
+import MiniGaffer
+import imath
+
+Gaffer.Metadata.registerValue( parent, "serialiser:milestoneVersion", 1, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:majorVersion", 8, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:minorVersion", 0, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:patchVersion", 0, persistent=False )
+
+__children = {}
+
+__children["reference"] = GafferScene.Plane( "reference" )
+parent.addChild( __children["reference"] )
+__children["reference"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["bent"] = GafferScene.Plane( "bent" )
+parent.addChild( __children["bent"] )
+__children["bent"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["referenceGroup"] = GafferScene.Group( "referenceGroup" )
+parent.addChild( __children["referenceGroup"] )
+__children["referenceGroup"]["in"].resize( 2 )
+__children["referenceGroup"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["scene"] = GafferScene.Group( "scene" )
+parent.addChild( __children["scene"] )
+__children["scene"]["in"].resize( 3 )
+__children["scene"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["bentFilter"] = GafferScene.PathFilter( "bentFilter" )
+parent.addChild( __children["bentFilter"] )
+__children["bentFilter"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["MiniBendDeformer"] = MiniGaffer.MiniBendDeformer( "MiniBendDeformer" )
+parent.addChild( __children["MiniBendDeformer"] )
+__children["MiniBendDeformer"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["Animation"] = Gaffer.Animation( "Animation" )
+parent.addChild( __children["Animation"] )
+__children["Animation"]["curves"].addChild( Gaffer.Animation.CurvePlug( "curve0", flags = ( Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic ) & ~Gaffer.Plug.Flags.AcceptsInputs, ) )
+__children["Animation"]["curves"]["curve0"].addKey( Gaffer.Animation.Key( 0.0416666679, 0, Gaffer.Animation.Interpolation.Linear, 0.331034477, 0, 0.331034477, 0, Gaffer.Animation.TieMode.Scale ) )
+__children["Animation"]["curves"]["curve0"].addKey( Gaffer.Animation.Key( 1.25, 0.400000006, Gaffer.Animation.Interpolation.Linear, 0.331034477, 0, -0.479999984, 0, Gaffer.Animation.TieMode.Scale ) )
+__children["Animation"]["curves"]["curve0"].addKey( Gaffer.Animation.Key( 2.91666675, -0.400000006, Gaffer.Animation.Interpolation.Linear, -0.479999984, 0, 0.320000066, 0, Gaffer.Animation.TieMode.Scale ) )
+__children["Animation"]["curves"]["curve0"].addKey( Gaffer.Animation.Key( 4.16666651, 0, Gaffer.Animation.Interpolation.Linear, 0.320000066, 0, 0.320000066, 0, Gaffer.Animation.TieMode.Scale ) )
+__children["reference"]["name"].setValue( 'reference' )
+__children["reference"]["dimensions"].setValue( imath.V2f( 2, 10 ) )
+__children["reference"]["divisions"].setValue( imath.V2i( 6, 100 ) )
+__children["reference"]["__uiPosition"].setValue( imath.V2f( -16, 16 ) )
+__children["bent"]["name"].setValue( 'bent' )
+__children["bent"]["dimensions"].setValue( imath.V2f( 2, 10 ) )
+__children["bent"]["divisions"].setValue( imath.V2i( 6, 100 ) )
+__children["bent"]["__uiPosition"].setValue( imath.V2f( 8, 16 ) )
+__children["referenceGroup"]["in"][0].setInput( __children["reference"]["out"] )
+__children["referenceGroup"]["name"].setValue( 'referenceGroup' )
+__children["referenceGroup"]["transform"]["translate"].setValue( imath.V3f( -4, 0, 0 ) )
+__children["referenceGroup"]["__uiPosition"].setValue( imath.V2f( -16, 0 ) )
+__children["scene"]["in"][0].setInput( __children["referenceGroup"]["out"] )
+__children["scene"]["in"][1].setInput( __children["bent"]["out"] )
+__children["scene"]["name"].setValue( 'scene' )
+__children["scene"]["__uiPosition"].setValue( imath.V2f( 0, -16 ) )
+__children["bentFilter"]["paths"].setValue( IECore.StringVectorData( [ '/scene/bent' ] ) )
+__children["bentFilter"]["__uiPosition"].setValue( imath.V2f( 28, 0 ) )
+__children["MiniBendDeformer"]["in"].setInput( __children["scene"]["out"] )
+__children["MiniBendDeformer"]["filter"].setInput( __children["bentFilter"]["out"] )
+__children["MiniBendDeformer"]["curvature"].setInput( __children["Animation"]["curves"]["curve0"]["out"] )
+__children["MiniBendDeformer"]["lowBound"].setValue( -3.0 )
+__children["MiniBendDeformer"]["highBound"].setValue( 3.0 )
+__children["MiniBendDeformer"]["__uiPosition"].setValue( imath.V2f( 0, -32 ) )
+
+
+del __children
