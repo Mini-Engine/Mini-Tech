@@ -1,0 +1,51 @@
+import Gaffer
+import GafferScene
+import MiniGaffer
+import imath
+
+Gaffer.Metadata.registerValue( parent, "serialiser:milestoneVersion", 1, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:majorVersion", 8, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:minorVersion", 0, persistent=False )
+Gaffer.Metadata.registerValue( parent, "serialiser:patchVersion", 0, persistent=False )
+
+__children = {}
+
+__children["teapot"] = MiniGaffer.YutaTeapot( "teapot" )
+parent.addChild( __children["teapot"] )
+__children["teapot"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["lowPoly"] = MiniGaffer.YutaTeapot( "lowPoly" )
+parent.addChild( __children["lowPoly"] )
+__children["lowPoly"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["noLid"] = MiniGaffer.YutaTeapot( "noLid" )
+parent.addChild( __children["noLid"] )
+__children["noLid"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["floor"] = GafferScene.Plane( "floor" )
+parent.addChild( __children["floor"] )
+__children["floor"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["teapots"] = GafferScene.Group( "teapots" )
+parent.addChild( __children["teapots"] )
+__children["teapots"]["in"].resize( 5 )
+__children["teapots"].addChild( Gaffer.V2fPlug( "__uiPosition", defaultValue = imath.V2f( 0, 0 ), flags = Gaffer.Plug.Flags.Default | Gaffer.Plug.Flags.Dynamic, ) )
+__children["teapot"]["__uiPosition"].setValue( imath.V2f( 0, 16 ) )
+__children["lowPoly"]["name"].setValue( 'lowPoly' )
+__children["lowPoly"]["transform"]["translate"].setValue( imath.V3f( -8, 0, 0 ) )
+__children["lowPoly"]["divisions"].setValue( 2 )
+__children["lowPoly"]["__uiPosition"].setValue( imath.V2f( -16, 16 ) )
+__children["noLid"]["name"].setValue( 'noLid' )
+__children["noLid"]["transform"]["translate"].setValue( imath.V3f( 7, 0, 0 ) )
+__children["noLid"]["size"].setValue( 0.75 )
+__children["noLid"]["lid"].setValue( False )
+__children["noLid"]["__uiPosition"].setValue( imath.V2f( 16, 16 ) )
+__children["floor"]["name"].setValue( 'floor' )
+__children["floor"]["transform"]["rotate"].setValue( imath.V3f( -90, 0, 0 ) )
+__children["floor"]["dimensions"].setValue( imath.V2f( 24, 12 ) )
+__children["floor"]["__uiPosition"].setValue( imath.V2f( 32, 16 ) )
+__children["teapots"]["in"][0].setInput( __children["lowPoly"]["out"] )
+__children["teapots"]["in"][1].setInput( __children["teapot"]["out"] )
+__children["teapots"]["in"][2].setInput( __children["noLid"]["out"] )
+__children["teapots"]["in"][3].setInput( __children["floor"]["out"] )
+__children["teapots"]["name"].setValue( 'teapots' )
+__children["teapots"]["__uiPosition"].setValue( imath.V2f( 8, 0 ) )
+
+
+del __children
