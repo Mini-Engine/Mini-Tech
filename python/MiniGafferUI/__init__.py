@@ -18,3 +18,4 @@ from . import MiniPointBindUI
 from . import MiniGrowCurvesUI
 from . import MiniBlendDeformerUI
 from . import MiniBendDeformerUI
+from . import MiniDustHitUI

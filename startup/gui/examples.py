@@ -96,6 +96,15 @@ GafferUI.Examples.registerExample(
 )
 
 GafferUI.Examples.registerExample(
+    "MiniGaffer/Dust Hit Example",
+    MTECH_ROOT / "examples/DustHitExample.gfr",
+    description = "A ball bouncing on a floor kicks up dust points and a VDB volume where it hits",
+    notableNodes = [
+        MiniGaffer.MiniDustHit
+    ]
+)
+
+GafferUI.Examples.registerExample(
     "MiniGaffer/Rigid Bind Example",
     MTECH_ROOT / "examples/rigidBind.gfr",
     description = "Rigid Bind and Deform"

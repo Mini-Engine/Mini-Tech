@@ -29,6 +29,10 @@ has_children: true
 * [**Mesh Curvature**](MiniGaffer/Meshes/MeshCurvature.md)
 * [**Mini Subdivide Meshes**](MiniGaffer/Meshes/SubdivideMesh.md)
 
+## Effects
+
+* [**Mini Dust Hit**](MiniGaffer/Effects/DustHit.md)
+
 ## Shading & OSL functions
 
 * [**Mini Noise Shaders**](MiniGaffer/Shading/NoiseShaders.md)

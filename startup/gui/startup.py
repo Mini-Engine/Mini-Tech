@@ -80,6 +80,14 @@ def __miniDecimatePointsPostCreator(node, menu):
 	node.load(
 		os.path.expandvars( __getReferencePath( "decimatePoints.grf" ) )
 	)
+def __miniDustHitVolume():
+	return Gaffer.Reference( "DustHitVolume" )
+
+def __miniDustHitVolumePostCreator(node, menu):
+	node.load(
+		os.path.expandvars( __getReferencePath( "dustHitVolume.grf" ) )
+	)
+
 def __miniManifold():
 		return Gaffer.Reference( "Manifold" )
 
@@ -167,6 +175,13 @@ if os.environ.get("MINITECH_REF_NODES", False):
 	)
 
 	nodeMenu.append(
+		path = "/Mini/VDB/DustHitVolume",
+		nodeCreator = __miniDustHitVolume,
+		postCreator = __miniDustHitVolumePostCreator,
+		searchText = "DustHitVolume"
+	)
+
+	nodeMenu.append(
 		path = "/Mini/Shader/Manifold",
 		nodeCreator = __miniManifold,
 		postCreator = __miniManifoldPostCreator,
@@ -199,6 +214,7 @@ nodeMenu.append( "/Mini/Scene/Curves/PointDeformer", MiniGaffer.MiniPointDeforme
 nodeMenu.append( "/Mini/Scene/Curves/PointBind", MiniGaffer.MiniPointBind, searchText = "PointBind" )
 nodeMenu.append( "/Mini/Scene/Mesh/BlendDeformer", MiniGaffer.MiniBlendDeformer, searchText = "BlendDeformer" )
 nodeMenu.append( "/Mini/Scene/Mesh/BendDeformer", MiniGaffer.MiniBendDeformer, searchText = "BendDeformer" )
+nodeMenu.append( "/Mini/Scene/Points/DustHit", MiniGaffer.MiniDustHit, searchText = "DustHit" )
 
 nodeMenu.append( "/Mini/Scene/Mesh/MeshCurvature", MiniGaffer.MiniMeshCurvature, searchText = "MeshCurvature" )
 nodeMenu.append( "/Mini/Scene/Mesh/BlurPrimitiveVariables", MiniGaffer.MiniBlurPrimitiveVariables, searchText = "BlurPrimitiveVariables" )
