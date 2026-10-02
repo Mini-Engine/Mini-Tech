@@ -16,7 +16,7 @@ import GafferSceneTest
 import MiniGaffer
 
 
-examples = os.path.join(pathlib.Path( __file__ ).resolve().parents[2], "examples")
+examples = ( pathlib.Path( __file__ ).resolve().parents[2] / "examples" ).as_posix()
 
 class MiniResampleCurvesTest( GafferSceneTest.SceneTestCase ) :
     def testConstruct( self ) :
