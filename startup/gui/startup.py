@@ -215,6 +215,7 @@ nodeMenu.append( "/Mini/Scene/Curves/PointBind", MiniGaffer.MiniPointBind, searc
 nodeMenu.append( "/Mini/Scene/Mesh/BlendDeformer", MiniGaffer.MiniBlendDeformer, searchText = "BlendDeformer" )
 nodeMenu.append( "/Mini/Scene/Mesh/BendDeformer", MiniGaffer.MiniBendDeformer, searchText = "BendDeformer" )
 nodeMenu.append( "/Mini/Scene/Points/DustHit", MiniGaffer.MiniDustHit, searchText = "DustHit" )
+nodeMenu.append( "/Mini/Scene/Primitive/YutaTeapot", MiniGaffer.YutaTeapot, searchText = "YutaTeapot Teapot" )
 
 nodeMenu.append( "/Mini/Scene/Mesh/MeshCurvature", MiniGaffer.MiniMeshCurvature, searchText = "MeshCurvature" )
 nodeMenu.append( "/Mini/Scene/Mesh/BlurPrimitiveVariables", MiniGaffer.MiniBlurPrimitiveVariables, searchText = "BlurPrimitiveVariables" )

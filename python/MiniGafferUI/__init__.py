@@ -19,3 +19,4 @@ from . import MiniGrowCurvesUI
 from . import MiniBlendDeformerUI
 from . import MiniBendDeformerUI
 from . import MiniDustHitUI
+from . import YutaTeapotUI

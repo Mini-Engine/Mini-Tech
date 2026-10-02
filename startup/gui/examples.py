@@ -105,6 +105,15 @@ GafferUI.Examples.registerExample(
 )
 
 GafferUI.Examples.registerExample(
+    "MiniGaffer/Yuta Teapot Example",
+    MTECH_ROOT / "examples/YutaTeapotExample.gfr",
+    description = "Utah teapots at different sizes and tessellations, one with its lid off",
+    notableNodes = [
+        MiniGaffer.YutaTeapot
+    ]
+)
+
+GafferUI.Examples.registerExample(
     "MiniGaffer/Rigid Bind Example",
     MTECH_ROOT / "examples/rigidBind.gfr",
     description = "Rigid Bind and Deform"

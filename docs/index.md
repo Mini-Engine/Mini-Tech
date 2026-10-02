@@ -28,6 +28,7 @@ has_children: true
 * [**Mini Merge Geometry**](MiniGaffer/Meshes/GeometryMerge.md)
 * [**Mesh Curvature**](MiniGaffer/Meshes/MeshCurvature.md)
 * [**Mini Subdivide Meshes**](MiniGaffer/Meshes/SubdivideMesh.md)
+* [**Yuta Teapot**](MiniGaffer/Meshes/YutaTeapot.md)
 
 ## Effects
 

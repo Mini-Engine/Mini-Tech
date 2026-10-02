@@ -20,6 +20,7 @@
 #include "Mini/MiniGrowCurves.h"
 #include "Mini/MiniBlendDeformer.h"
 #include "Mini/MiniBendDeformer.h"
+#include "Mini/YutaTeapot.h"
 #include "Mini/MiniDustHit.h"
 
 using namespace boost::python;
@@ -59,6 +60,8 @@ BOOST_PYTHON_MODULE( _MiniGaffer )
 
     typedef GafferBindings::DependencyNodeWrapper<MiniGaffer::MiniBendDeformer> MiniGafferBendDeformerWrapper;
     GafferBindings::DependencyNodeClass<MiniGaffer::MiniBendDeformer, MiniGafferBendDeformerWrapper>();
+
+    GafferBindings::DependencyNodeClass<MiniGaffer::YutaTeapot>();
 
     typedef GafferBindings::DependencyNodeWrapper<MiniGaffer::MiniDustHit> MiniGafferDustHitWrapper;
     GafferBindings::DependencyNodeClass<MiniGaffer::MiniDustHit, MiniGafferDustHitWrapper>();

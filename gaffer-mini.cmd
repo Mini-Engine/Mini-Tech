@@ -2,12 +2,20 @@
 rem Launch Gaffer with the Mini-Tech extension loaded.
 rem Usage: gaffer-mini.cmd [gaffer args...]   e.g. gaffer-mini.cmd test MiniGafferTest
 rem
-rem MINITECH_INSTALL  Mini-Tech install dir (default: .install next to this script)
+rem MINITECH_INSTALL  Mini-Tech install dir (default: .install next to this script,
+rem                                          else the first build\.install\* with a python folder)
 rem GAFFER_BUILD      Gaffer build dir      (default: first "gaffer-build" folder found
 rem                                          1 to 4 levels above this script)
 
 setlocal
 
+rem Default to .install, else the first installed build\.install\* (the CMake build's install prefix).
+if not defined MINITECH_INSTALL if exist "%~dp0.install\python" set "MINITECH_INSTALL=%~dp0.install"
+if not defined MINITECH_INSTALL (
+    for /d %%I in ("%~dp0build\.install\*") do (
+        if not defined MINITECH_INSTALL if exist "%%~fI\python" set "MINITECH_INSTALL=%%~fI"
+    )
+)
 if not defined MINITECH_INSTALL set "MINITECH_INSTALL=%~dp0.install"
 
 if not defined GAFFER_BUILD (

@@ -21,6 +21,7 @@ namespace MiniGaffer {
         MiniBlendDeformerTypeId = 115013,
         MiniBendDeformerTypeId = 115014,
         MiniDustHitTypeId = 115015,
+        YutaTeapotTypeId = 115016,
         LastTypeId = 115099,
     };
 
