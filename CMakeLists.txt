@@ -53,6 +53,7 @@ add_library( MiniGafferVDB SHARED ${MiniGafferVDBSrc} )
 if (WIN32)
     target_compile_definitions( MiniGaffer PRIVATE BOOST_SIGNALS_NO_DEPRECATION_WARNING=1  _GLIBCXX_USE_CXX11_ABI=0)
     target_compile_definitions( MiniGafferVDB PRIVATE BOOST_SIGNALS_NO_DEPRECATION_WARNING=1  _GLIBCXX_USE_CXX11_ABI=0)
+    target_compile_options( MiniGafferVDB PRIVATE /bigobj )
 else()
     target_compile_definitions( MiniGaffer PRIVATE BOOST_SIGNALS_NO_DEPRECATION_WARNING=1 LINUX=1 _GLIBCXX_USE_CXX11_ABI=0)
     target_compile_definitions( MiniGafferVDB PRIVATE BOOST_SIGNALS_NO_DEPRECATION_WARNING=1 LINUX=1 _GLIBCXX_USE_CXX11_ABI=0)
@@ -69,6 +70,12 @@ target_include_directories( MiniGafferVDB SYSTEM PRIVATE ${DEPENDENCY_INCLUDE_PA
 target_include_directories( MiniGafferVDB PRIVATE include )
 target_link_libraries( MiniGafferVDB Gaffer GafferVDB GafferScene GafferImage IECore IECoreScene IECoreVDB GafferUI
         fmt openvdb)
+if (WIN32)
+    # OpenVDB's heavy template instantiation pushes the auto-exported symbol
+    # count past the 65535-object limit of the Windows .lib archive format
+    # (LNK1189) when CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS is on.
+    set_target_properties( MiniGafferVDB PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS OFF )
+endif()
 install( TARGETS MiniGafferVDB DESTINATION lib )
 
 # build the python bindings
